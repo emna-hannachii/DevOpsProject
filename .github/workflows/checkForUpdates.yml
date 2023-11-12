@@ -1,0 +1,20 @@
+name: Check for updates
+
+on:
+  schedule:
+    - cron: '*/2 * * * *' # Runs every 2 minutes
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for updates
+        run: |
+          git fetch
+          CHANGES=$(git log HEAD..origin/SaharLETAIEF-5ARCTIC5-G3 --oneline)
+          if [ -n "$CHANGES" ]; then
+            echo "Changes detected. Trigger the webhook or other actions here."
+          else
+            echo "No changes detected."
+          fi
