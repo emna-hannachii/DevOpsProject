@@ -1,0 +1,47 @@
+version : '3'
+services:
+  mysql-db:
+    image: mysql:latest
+    container_name: MySQL
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=devops
+    ports:
+      - 3306:3306
+
+
+  spring-boot-app:
+    image : *******/*****:EmnaHANNACHI-5ARCTIC5-G3-DevOps
+    container_name: SpringApp
+    depends_on:
+      - mysql-db
+    restart: on-failure
+    ports:
+      - 8082:8082
+    volumes:
+      - spring-data:/app/data
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://mysql-db:3306/devops?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.show-sql" : "true",
+        "spring.jpa.hibernate.ddl-auto" : "update",
+        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"
+          }'
+
+  angular-app:
+    image : ******/*****:EmnaHANNACHI-5ARCTIC5-G3-DevOps_Front
+    container_name: AngularApp
+    ports:
+      - 80:80
+    depends_on :
+      - spring-boot-app
+    restart : on-failure
+
+
+
+
+volumes:
+  spring-data:

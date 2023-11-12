@@ -38,7 +38,7 @@ pipeline {
                 script{
                     sh 'curl -o 5ARCTIC5-G3-DevOps-latest.jar "http://192.168.187.157:8081/repository/maven-releases/tn/esprit/5ARCTIC5-G3-DevOps/latest/5ARCTIC5-G3-DevOps-latest.jar"'
                     dir('/var/lib/jenkins/workspace/validation'){
-                    sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/devops:EmnaHANNACHI-5ARCTIC5-G3-DevOps . '
+                    sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/******:EmnaHANNACHI-5ARCTIC5-G3-DevOps . '
                 }
                 }
             }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script{
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push $DOCKERHUB_CREDENTIALS_USR/devops:EmnaHANNACHI-5ARCTIC5-G3-DevOps'
+                    sh 'docker push $DOCKERHUB_CREDENTIALS_USR/*****:EmnaHANNACHI-5ARCTIC5-G3-DevOps'
 
                 }
             }
